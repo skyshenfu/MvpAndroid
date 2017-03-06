@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.elearningpath.wetestx.MainApplication;
 import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.base.BaseActiviy;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.presenters.MainPresenter;
+import com.elearningpath.wetestx.utils.ProgressUtils;
 import com.elearningpath.wetestx.utils.StatusBarUtil;
 import com.elearningpath.wetestx.views.MainView;
 import com.elearningpath.wetestx.widgets.LoadingDialog;
@@ -25,22 +27,20 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
     TextView contentTextView;
     @BindView(R.id.change_button)
     Button button;
-    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setActivityType(0,"标题",true);
+        setProgressEnable();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder=ButterKnife.bind(this);
         presenter= new MainPresenter(this);
     }
 
+
     @Override
     public void showProgress() {
-        if (dialog==null){
-            dialog=new LoadingDialog(this);
-        }
-        dialog.show();
+        progressUtils.progressShow();
     }
     @OnClick(R.id.change_button)
     void onClick(View view){
@@ -53,7 +53,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
     }
     @Override
     public void hideProgress() {
-        dialog.dismiss();
+        progressUtils.progressDismiss();
     }
 
     @Override

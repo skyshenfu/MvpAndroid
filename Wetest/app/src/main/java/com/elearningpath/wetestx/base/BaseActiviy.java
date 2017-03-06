@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.activities.MainActivity;
+import com.elearningpath.wetestx.utils.ProgressUtils;
 import com.elearningpath.wetestx.utils.StatusBarUtil;
 
 import butterknife.Unbinder;
@@ -35,6 +36,7 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     protected Unbinder unbinder;
     protected Subscription rxSbscription=null;
     protected boolean isMainActivity=false;
+    protected ProgressUtils progressUtils=null;
     protected TextView titleTextView;
     protected String title;
     protected LinearLayout rootLayout;
@@ -108,6 +110,10 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
         }
         rootLayout.addView(view,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initTop();
+    }
+
+    protected void setProgressEnable() {
+        progressUtils=new ProgressUtils(this);
     }
     private void initTop() {
         initTitle();
