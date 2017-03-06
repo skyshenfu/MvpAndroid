@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.activities.MainActivity;
+import com.elearningpath.wetestx.utils.StatusBarUtil;
 
 import butterknife.Unbinder;
 import rx.Subscription;
@@ -111,7 +112,14 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     private void initTop() {
         initTitle();
         initIcon();
+        initStatusBar();
     }
+
+    private void initStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorAccent),0);
+    }
+
+
     private void initIcon() {
         ImageView backButton= (ImageView) rootLayout.findViewById(R.id.im_back);
         ImageView menuButton=(ImageView) rootLayout.findViewById(R.id.im_other);

@@ -10,7 +10,9 @@ import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.base.BaseActiviy;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.presenters.MainPresenter;
+import com.elearningpath.wetestx.utils.StatusBarUtil;
 import com.elearningpath.wetestx.views.MainView;
+import com.elearningpath.wetestx.widgets.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +25,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
     TextView contentTextView;
     @BindView(R.id.change_button)
     Button button;
-    private ProgressDialog dialog;
+    private LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setActivityType(0,"标题",true);
@@ -36,7 +38,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
     @Override
     public void showProgress() {
         if (dialog==null){
-            dialog=new ProgressDialog(this);
+            dialog=new LoadingDialog(this);
         }
         dialog.show();
     }

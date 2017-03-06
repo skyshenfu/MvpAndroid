@@ -42,4 +42,8 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
     //一个通用的RecyclerViewAdapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.8.3'
+    //图像库
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //一个loading
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
 }
