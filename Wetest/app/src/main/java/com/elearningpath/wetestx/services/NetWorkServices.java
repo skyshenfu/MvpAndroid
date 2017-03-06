@@ -67,26 +67,19 @@ public class NetWorkServices {
 
 
 /*    public void getLoginResult(Subscriber<ApiResponse<LogInBean>> subscriber, String name, String password) {
-        new Inner<>(subscriber).getThreadTurn(netWorkRequests.getLoginResult(name, password));
+        netWorkRequests.getLoginResult(name, password).compose(schedulersTransformer()).subscribe(subscriber);
     }*/
 
     //一个内部类，抽象了线程调度逻辑
-    private class Inner<T extends DataInterface>{
-        private Subscriber<ApiResponse<T>> subscriber;
+    Observable.Transformer schedulersTransformer() {
+        return new Observable.Transformer() {
 
-        public Inner(Subscriber<ApiResponse<T>> subscriber) {
-            this.subscriber = subscriber;
-        }
-        public void getThreadTurn(Observable<ApiResponse<T>> observable){
-            observable
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(subscriber);
-        }
-
-        @Override
-        protected void finalize() throws Throwable {
-            super.finalize();
-        }
+            @Override
+            public Object call(Object observable) {
+                return ((Observable)  observable).subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+            }
+        };
     }
 }
