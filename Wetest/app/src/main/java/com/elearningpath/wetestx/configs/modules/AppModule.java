@@ -1,9 +1,8 @@
-package com.elearningpath.wetestx.models;
+package com.elearningpath.wetestx.configs.modules;
 
-import android.app.Application;
 import android.content.Context;
 
-import javax.inject.Singleton;
+import com.elearningpath.wetestx.configs.scope.ApplicationScope;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,7 +19,7 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     Context providesApplication(){
         return mapplicationContext;
     }

@@ -1,20 +1,15 @@
-package com.elearningpath.wetestx.services;
+package com.elearningpath.wetestx.utils;
 
-import com.elearningpath.wetestx.beans.ApiResponse;
-import com.elearningpath.wetestx.beans.DataInterface;
-import com.elearningpath.wetestx.utils.NetWorkRequests;
-import com.elearningpath.wetestx.utils.RequestInterceptor;
+import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -25,13 +20,13 @@ import rx.schedulers.Schedulers;
  * 功能说明：提供网络方法的外部调用，调用者提供在主线程的显示操作
  */
 
-public class NetWorkServices {
+public class NetApi {
     private NetWorkRequests netWorkRequests;
     private Retrofit retrofit;
-    private static NetWorkServices singleton = null;    //私有的、类型为Singleton自身的静态成员变量
+    private static NetApi singleton = null;    //私有的、类型为Singleton自身的静态成员变量
 
     //构造方法被设为私有，防止外部使用new来创建对象，破坏单例
-    private NetWorkServices() {
+    private NetApi() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.addInterceptor(new RequestInterceptor());
         httpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
@@ -42,21 +37,22 @@ public class NetWorkServices {
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl("")
+                .baseUrl("http://wwww.baidu.com")
                 .build();
         netWorkRequests = retrofit.create(NetWorkRequests.class);
     }
 
     //公有的静态方法，供外部调用来获取单例对象
-    public static NetWorkServices getInstance() {
+    public static NetApi getInstance() {
         if (singleton == null) {    //第一次调用该方法时，创建对象。
-            singleton = new NetWorkServices();
+            singleton = new NetApi();
+            Log.e("here", "getInstance: "+"初始化" );
         }
         return singleton;
     }
 
     public static void setSingleton() {
-        NetWorkServices.singleton = null;
+        NetApi.singleton = null;
     }
 
     /*
