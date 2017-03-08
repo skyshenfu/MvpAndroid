@@ -522,7 +522,7 @@ public static final ** CREATOR;
    *;
 }
 
-
+#缺Dagger2的混淆规则
 
 
 
