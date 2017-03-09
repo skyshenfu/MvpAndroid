@@ -7,6 +7,7 @@ import com.elearningpath.wetestx.base.BaseModel;
  */
 
 public class MainModel extends BaseModel {
+
     private String numberStr;
 
     public String getNumberStr() {

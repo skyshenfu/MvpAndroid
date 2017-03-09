@@ -7,6 +7,8 @@ import com.elearningpath.wetestx.views.MainView;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,6 +20,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class MainPresenter extends BasePresenterImpl<MainView> {
+    @Inject
     public MainPresenter(MainView view) {
         super(view);
     }

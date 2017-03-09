@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.elearningpath.wetestx.MainApplication;
 import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.base.BaseActiviy;
+import com.elearningpath.wetestx.configs.components.DaggerActivityComponent;
+import com.elearningpath.wetestx.configs.modules.MainModule;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.presenters.MainPresenter;
 import com.elearningpath.wetestx.utils.ProgressUtils;
@@ -34,7 +36,10 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder=ButterKnife.bind(this);
-        presenter= new MainPresenter(this);
+        DaggerActivityComponent.builder()
+                .mainModule(new MainModule(this))
+                .build()
+                .inject(this);
     }
 
 

@@ -17,6 +17,8 @@ import com.elearningpath.wetestx.activities.MainActivity;
 import com.elearningpath.wetestx.utils.ProgressUtils;
 import com.elearningpath.wetestx.utils.StatusBarUtil;
 
+import javax.inject.Inject;
+
 import butterknife.Unbinder;
 import rx.Subscription;
 
@@ -31,6 +33,7 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     protected static final int TITLEBARONLYBACK=1;
     protected static final String TITLEDEFAULT="复用DEMO";
     //Presenter
+    @Inject
     protected P presenter;
     //Butterknife的解绑对象
     protected Unbinder unbinder;
