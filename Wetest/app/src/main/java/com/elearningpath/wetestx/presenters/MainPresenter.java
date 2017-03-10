@@ -28,7 +28,7 @@ public class MainPresenter extends BasePresenterImpl<MainView> {
     public void loadData(){
         //模拟网络耗时操作
         view.showProgress();
-        Observable.interval(9, TimeUnit.SECONDS)
+        Observable.interval(10, TimeUnit.SECONDS)
                 .take(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
