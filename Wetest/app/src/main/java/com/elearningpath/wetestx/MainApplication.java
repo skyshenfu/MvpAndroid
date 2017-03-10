@@ -6,7 +6,6 @@ import android.util.Log;
 import com.elearningpath.wetestx.configs.components.DaggerAppComponent;
 import com.elearningpath.wetestx.configs.modules.AppModule;
 import com.elearningpath.wetestx.utils.NetApi;
-
 import javax.inject.Inject;
 
 

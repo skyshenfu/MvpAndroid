@@ -18,7 +18,10 @@ public class RetrofitCancel {
     private Subscriber subscriber;
     private Subscriber timerSubscriber;
 
-    public RetrofitCancel(Subscriber subscriber) {
+    public RetrofitCancel() {
+    }
+
+    public void setSubscriber(Subscriber subscriber) {
         this.subscriber = subscriber;
     }
 
@@ -49,14 +52,16 @@ public class RetrofitCancel {
     public void timerStop(){
         if (timerSubscriber!=null&&!timerSubscriber.isUnsubscribed()){
             timerSubscriber.unsubscribe();
+            Log.e("TAG", "onNext: 解绑-寿终正寝" );
         }
     }
     private void cancleNetRequest(){
         if (subscriber!=null&&!subscriber.isUnsubscribed())
         {
+            Log.e("TAG", "onNext: 解绑-取消请求" );
             subscriber.unsubscribe();
         }else {
-            Log.e("TAG", "onNext: 解绑22223333" );
+            Log.e("TAG", "onNext: 解绑-8秒完毕" );
         }
 
     }
@@ -64,6 +69,6 @@ public class RetrofitCancel {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        Log.e("回收了", "finalize: " );
+        Log.e("回收了", "finalize: "+this.toString() );
     }
 }

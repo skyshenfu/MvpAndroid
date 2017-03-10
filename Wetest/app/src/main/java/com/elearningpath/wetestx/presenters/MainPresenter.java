@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import dagger.Lazy;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,6 +23,8 @@ import rx.schedulers.Schedulers;
 
 public class MainPresenter extends BasePresenterImpl<MainView> {
     @Inject
+    Lazy<MainModel> lazyMainModel;
+    @Inject
     public MainPresenter(MainView view) {
         super(view);
     }
@@ -29,10 +32,12 @@ public class MainPresenter extends BasePresenterImpl<MainView> {
     public void loadData(){
         //模拟网络耗时操作
         view.showProgress();
+        final RetrofitCancel retrofitCancel=new RetrofitCancel();
        Subscriber<Long> subscriber= new Subscriber<Long>() {
             @Override
             public void onCompleted() {
                 view.hideProgress();
+                retrofitCancel.timerStop();
             }
 
             @Override
@@ -41,14 +46,14 @@ public class MainPresenter extends BasePresenterImpl<MainView> {
 
             @Override
             public void onNext(Long aLong) {
-                MainModel mainModel=new MainModel();
-                mainModel.setTitle("标题"+ new Random().nextInt(200));
-                mainModel.setNumberStr("内容"+new Random().nextInt(200));
-                view.showData(mainModel);
+                lazyMainModel.get().setTitle("标题"+ new Random().nextInt(200));
+                lazyMainModel.get().setNumberStr("内容"+new Random().nextInt(200));
+                view.showData(lazyMainModel.get());
             }
         };
-        new RetrofitCancel(subscriber).timerStart();
-        Observable.interval(5, TimeUnit.SECONDS)
+        retrofitCancel.setSubscriber(subscriber);
+        retrofitCancel.timerStart();
+        Observable.interval(3, TimeUnit.SECONDS)
                 .take(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
