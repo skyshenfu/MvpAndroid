@@ -2,6 +2,7 @@ package com.elearningpath.wetestx.presenters;
 
 import com.elearningpath.wetestx.base.BasePresenterImpl;
 import com.elearningpath.wetestx.models.MainModel;
+import com.elearningpath.wetestx.utils.RetrofitCancel;
 import com.elearningpath.wetestx.views.MainView;
 
 import java.util.Random;
@@ -28,28 +29,31 @@ public class MainPresenter extends BasePresenterImpl<MainView> {
     public void loadData(){
         //模拟网络耗时操作
         view.showProgress();
-        Observable.interval(10, TimeUnit.SECONDS)
+       Subscriber<Long> subscriber= new Subscriber<Long>() {
+            @Override
+            public void onCompleted() {
+                view.hideProgress();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                MainModel mainModel=new MainModel();
+                mainModel.setTitle("标题"+ new Random().nextInt(200));
+                mainModel.setNumberStr("内容"+new Random().nextInt(200));
+                view.showData(mainModel);
+            }
+        };
+        new RetrofitCancel(subscriber).timerStart();
+        Observable.interval(5, TimeUnit.SECONDS)
                 .take(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Long>() {
-                    @Override
-                    public void onCompleted() {
-                        view.hideProgress();
-                    }
+                .subscribe(subscriber);
 
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        MainModel mainModel=new MainModel();
-                        mainModel.setTitle("标题"+ new Random().nextInt(200));
-                        mainModel.setNumberStr("内容"+new Random().nextInt(200));
-                        view.showData(mainModel);
-                    }
-                });
     }
 
     @Override
