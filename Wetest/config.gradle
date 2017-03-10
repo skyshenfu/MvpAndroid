@@ -1,0 +1,30 @@
+ext {
+            //SDK & Tool
+            compileSdkVersion = 25
+            buildToolsVersion = '25.0.2'
+            minSdkVersion = 16
+            targetSdkVersion = 22
+
+           versionCode=1
+           versionName='1.0'
+
+            // Butterknife
+            butterknifeVersion='8.1.0'
+            //dependencies
+            supportLibraryVersion = '25.1.1'
+            //Rx
+            rxAndroidVersion = '1.2.1'
+            rxJavaVersion = '1.2.1'
+            //Retrofit的依赖
+            retrofitVersion='2.2.0'
+            //OKhttp
+            okhttpVersion='3.3.0'
+            //一个通用的RecyclerViewAdapter
+            recyclerViewAdapterVersion = '2.8.3'
+            //glide
+            glideVersion='3.7.0'
+            //loading
+            loadingVersion='1.1.0'
+
+
+}

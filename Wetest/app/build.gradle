@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         applicationId "com.elearningpath.wetestx"
-        minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,31 +23,31 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    testCompile 'junit:junit:4.12'
-    //Butterknife依赖
-    apt 'com.jakewharton:butterknife-compiler:8.1.0'
-    compile 'com.jakewharton:butterknife:8.1.0'
     // Dagger 2
     apt 'com.google.dagger:dagger-compiler:2.10-rc2'
     compile 'com.google.dagger:dagger:2.10-rc2'
     // Dagger 2 中会用到 @Generated 注解，而 Android SDK 中没有 javax.anotation.Generated.class，所以在 Android 项目要添加此句
     provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    //Butterknife依赖
+    apt "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+    compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+
     //RxJava和RxAndroid依赖
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.2.1'
+    compile "io.reactivex:rxandroid:$rootProject.rxAndroidVersion"
+    compile "io.reactivex:rxjava:$rootProject.rxJavaVersion"
     //Retrofit的依赖
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
-    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-scalars:$rootProject.retrofitVersion"
     //Retrofit是基于okheep的以下是okhttp的依赖
-    compile 'com.squareup.okhttp3:okhttp:3.3.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
     //一个通用的RecyclerViewAdapter
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.8.3'
+    compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.recyclerViewAdapterVersion"
     //图像库
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     //一个loading
-    compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    compile "com.github.ybq:Android-SpinKit:$rootProject.loadingVersion"
 }
