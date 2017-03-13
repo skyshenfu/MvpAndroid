@@ -25,6 +25,9 @@ ext {
             glideVersion='3.7.0'
             //loading
             loadingVersion='1.1.0'
+            //七牛视频优化组件
+            qiniuqosVersion='0.8.+'
+            qiniuhappydnsVersion='0.2.11'
 
 
 }

@@ -521,9 +521,13 @@ public static final ** CREATOR;
 -keep class com.chad.library.adapter.** {
    *;
 }
-
 #缺Dagger2的混淆规则
 
+#七牛推流混淆规则
+-keep class com.qiniu.pili.droid.streaming.** { *; }
+#七牛播放混淆规则
+-keep class com.pili.pldroid.player.** { *; }
+-keep class tv.danmaku.ijk.media.player.** {*;}
 
 
 
