@@ -2,22 +2,19 @@ package com.elearningpath.wetestx.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.elearningpath.wetestx.MainApplication;
 import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.base.BaseActiviy;
 import com.elearningpath.wetestx.configs.components.DaggerActivityComponent;
 import com.elearningpath.wetestx.configs.modules.MainModule;
+import com.elearningpath.wetestx.configs.modules.ProgressMoudle;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.presenters.MainPresenter;
-import com.elearningpath.wetestx.utils.ProgressUtils;
-import com.elearningpath.wetestx.utils.StatusBarUtil;
 import com.elearningpath.wetestx.views.MainView;
-import com.elearningpath.wetestx.widgets.LoadingDialog;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,20 +29,21 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setActivityType(0,"标题",true);
-        setProgressEnable();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder=ButterKnife.bind(this);
         DaggerActivityComponent.builder()
                 .mainModule(new MainModule(this))
+                .progressMoudle(new ProgressMoudle(this))
                 .build()
                 .inject(this);
+        Log.e("ssdad", "onCreate:");
     }
 
 
     @Override
     public void showProgress() {
-        progressUtils.progressShow();
+        lazyProgressUtils.get().progressShow();
     }
     @OnClick(R.id.change_button)
     void onClick(View view){
@@ -58,7 +56,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
     }
     @Override
     public void hideProgress() {
-        progressUtils.progressDismiss();
+        lazyProgressUtils.get().progressDismiss();
     }
 
     @Override

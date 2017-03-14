@@ -20,6 +20,7 @@ import com.elearningpath.wetestx.utils.StatusBarUtil;
 import javax.inject.Inject;
 
 import butterknife.Unbinder;
+import dagger.Lazy;
 import rx.Subscription;
 
 /**
@@ -35,11 +36,13 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     //Presenter
     @Inject
     protected P presenter;
+    @Inject
+    protected Lazy<ProgressUtils> lazyProgressUtils;
     //Butterknife的解绑对象
     protected Unbinder unbinder;
     protected Subscription rxSbscription=null;
     protected boolean isMainActivity=false;
-    protected ProgressUtils progressUtils=null;
+
     protected TextView titleTextView;
     protected String title;
     protected LinearLayout rootLayout;
@@ -115,9 +118,6 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
         initTop();
     }
 
-    protected void setProgressEnable() {
-        progressUtils=new ProgressUtils(this);
-    }
     private void initTop() {
         initTitle();
         initIcon();
