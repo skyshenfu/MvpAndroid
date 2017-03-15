@@ -1,5 +1,7 @@
 package com.elearningpath.wetestx.base;
 
+import android.util.Log;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -8,22 +10,18 @@ import java.lang.ref.WeakReference;
  */
 
     public abstract class BasePresenterImpl<T extends BaseView> implements BasePresenter{
-    protected WeakReference<T> viewRef;
     protected T view;
     public BasePresenterImpl(T view) {
         this.view = view;
     }
 
     @Override
-    public void attachMvpView() {
-        viewRef = new WeakReference<>(view);
-    }
-
-    @Override
     public void detachMvpView() {
-        if (viewRef !=null){
-            viewRef.clear();
+        if (view !=null){
+            Log.e("TAG", "detachMvpView: 1");
             view=null;
+        }else {
+            Log.e("TAG", "detachMvpView: 2");
         }
     }
 

@@ -70,14 +70,9 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e("h", "onDestroy: 1");
         if (rxSbscription!=null){
             if (!rxSbscription.isUnsubscribed()) {
                 rxSbscription.unsubscribe();
-                Log.e("h", "onDestroy: 2");
-            }else {
-                Log.e("h", "onDestroy: 3");
-
             }
 
         }
@@ -86,6 +81,10 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
             presenter.detachMvpView();
             //再直接让Presenter为null
             presenter=null;
+            Log.e("TAG", "onDestroy: 4");
+        }else {
+            Log.e("TAG", "onDestroy: 5");
+
         }
         if (unbinder!=null){
             //解绑ButterKnife

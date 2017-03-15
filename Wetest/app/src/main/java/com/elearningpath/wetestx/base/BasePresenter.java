@@ -7,7 +7,6 @@ package com.elearningpath.wetestx.base;
 
 public interface BasePresenter {
     //此方法为activity初始化时需要进行的业务操作的方法
-    void attachMvpView();
     void initMvpView();
     //此方法为activity解绑View和Presenter的关系
     void detachMvpView();
