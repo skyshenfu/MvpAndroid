@@ -12,7 +12,7 @@ import dagger.Component;
  * Created by zhangty on 2017/3/8.
  */
 @ActivityScope
-@Component(modules = {MainModule.class, ProgressMoudle.class})
+@Component(modules = {MainModule.class, ProgressMoudle.class,RxbusSubscriptionModule.class})
 public interface ActivityComponent {
     void inject(MainActivity mainActivity);
 }

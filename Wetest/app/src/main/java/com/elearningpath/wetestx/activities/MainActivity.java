@@ -12,14 +12,23 @@ import com.elearningpath.wetestx.base.BaseActiviy;
 import com.elearningpath.wetestx.configs.components.DaggerActivityComponent;
 import com.elearningpath.wetestx.configs.modules.MainModule;
 import com.elearningpath.wetestx.configs.modules.ProgressMoudle;
+import com.elearningpath.wetestx.configs.modules.RxbusSubscriptionModule;
+import com.elearningpath.wetestx.events.Event;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.presenters.MainPresenter;
 import com.elearningpath.wetestx.views.MainView;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActiviy<MainPresenter> implements MainView {
+    @Inject
+    Subscription rxSbscription;
     @BindView(R.id.title_textview)
     TextView titleTextView;
     @BindView(R.id.content_textview)
@@ -35,8 +44,17 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
         DaggerActivityComponent.builder()
                 .mainModule(new MainModule(this))
                 .progressMoudle(new ProgressMoudle(this))
+                .rxbusSubscriptionModule(new RxbusSubscriptionModule(new Action1<Event>() {
+                    @Override
+                    public void call(Event event) {
+                        if (event.getName().equals("ABC")){
+                            Log.e("TAG", "call: ");
+                        }
+                    }
+                }))
                 .build()
                 .inject(this);
+        super.rxSbscription=this.rxSbscription;
         Log.e("ssdad", "onCreate:");
     }
 

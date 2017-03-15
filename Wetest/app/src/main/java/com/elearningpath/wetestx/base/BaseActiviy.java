@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,10 +70,16 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.e("h", "onDestroy: 1");
         if (rxSbscription!=null){
             if (!rxSbscription.isUnsubscribed()) {
                 rxSbscription.unsubscribe();
+                Log.e("h", "onDestroy: 2");
+            }else {
+                Log.e("h", "onDestroy: 3");
+
             }
+
         }
         if (presenter!=null){
             //先解绑Presenter和View的耦合关系
