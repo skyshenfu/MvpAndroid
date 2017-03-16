@@ -1,10 +1,9 @@
 package com.elearningpath.wetestx.presenters;
 
 import com.elearningpath.wetestx.base.BasePresenterImpl;
+import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.utils.RetrofitCancel;
-import com.elearningpath.wetestx.views.MainView;
-
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -24,11 +23,11 @@ import rx.schedulers.Schedulers;
  * 描述：
  */
 
-public class MainPresenter extends BasePresenterImpl<MainView> {
+public class MainPresenter extends BasePresenterImpl<BaseView> {
     @Inject
     Lazy<MainModel> lazyMainModel;
     @Inject
-    public MainPresenter(MainView view) {
+    public MainPresenter(BaseView view) {
         super(view);
     }
 

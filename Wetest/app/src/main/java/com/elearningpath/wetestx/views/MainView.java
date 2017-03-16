@@ -1,5 +1,8 @@
 package com.elearningpath.wetestx.views;
 
+import android.support.annotation.Nullable;
+
+import com.elearningpath.wetestx.base.BaseModel;
 import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.models.MainModel;
 
@@ -11,7 +14,5 @@ import com.elearningpath.wetestx.models.MainModel;
  * 描述：
  */
 public interface MainView extends BaseView {
-    void showProgress();
-    void hideProgress();
-    void showData(MainModel mainModel);
+
 }

@@ -2,6 +2,7 @@ package com.elearningpath.wetestx.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.base.BaseActiviy;
+import com.elearningpath.wetestx.base.BaseModel;
+import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.configs.components.DaggerActivityComponent;
 import com.elearningpath.wetestx.configs.modules.MainModule;
 import com.elearningpath.wetestx.configs.modules.ProgressMoudle;
@@ -32,7 +35,7 @@ import rx.functions.Action1;
  * 版本号：1.0.0
  * 描述：
  */
-public class MainActivity extends BaseActiviy<MainPresenter> implements MainView {
+public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView {
     @Inject
     Subscription rxSbscription;
     @BindView(R.id.title_textview)
@@ -84,7 +87,8 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements MainView
     }
 
     @Override
-    public void showData(MainModel mainModel) {
+    public void showData(@Nullable BaseModel model) {
+        MainModel mainModel= (MainModel) model;
         titleTextView.setText(mainModel.getTitle());
         contentTextView.setText(mainModel.getNumberStr());
     }
