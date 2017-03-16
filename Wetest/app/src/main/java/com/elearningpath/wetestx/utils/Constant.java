@@ -9,7 +9,7 @@ package com.elearningpath.wetestx.utils;
  */
 
 public class Constant {
-    public static boolean ISDEBUGMODE=false;
+    public static boolean ISDEBUGMODE=true;
     public static final  String BASEURL="";
     public static final String  LOGGERTAG="DEBUGINFO";
 }

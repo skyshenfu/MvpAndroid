@@ -1,6 +1,7 @@
 package com.elearningpath.wetestx.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -71,11 +72,16 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
     public void showProgress() {
         lazyProgressUtils.get().progressShow();
     }
-    @OnClick(R.id.change_button)
+    @OnClick({R.id.change_button,R.id.act_button,R.id.watch_button})
     void onClick(View view){
         switch (view.getId()){
             case R.id.change_button:
                 presenter.loadData();
+                break;
+            case R.id.watch_button:
+                startActivity(new Intent(this,VideoActivity.class));
+                break;
+            case R.id.act_button:
                 break;
         }
 

@@ -23,4 +23,18 @@
         android:layout_below="@id/content_textview"
         android:layout_width="@dimen/x500"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/watch_button"
+        android:text="观看直播"
+        android:layout_marginTop="20.92dp"
+        android:layout_below="@id/change_button"
+        android:layout_width="@dimen/x500"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/act_button"
+        android:text="进行直播"
+        android:layout_marginTop="20.92dp"
+        android:layout_below="@id/watch_button"
+        android:layout_width="@dimen/x500"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
