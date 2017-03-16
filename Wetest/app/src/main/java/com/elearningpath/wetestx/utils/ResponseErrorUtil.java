@@ -2,12 +2,12 @@ package com.elearningpath.wetestx.utils;
 
 import android.content.Context;
 import android.widget.Toast;
-
 /**
- * 创建者：韦小宝
- * 创建日期：16/11/8
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
  * 版本号：1.0.0
- * 功能说明：拦截rxjava最外层的错误请求
+ * 描述：
  */
 
 public class ResponseErrorUtil {

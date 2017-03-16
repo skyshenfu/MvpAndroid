@@ -8,10 +8,11 @@ import com.elearningpath.wetestx.beans.ApiResponse;
 import com.elearningpath.wetestx.beans.DataInterface;
 
 /**
- * 创建者：韦小宝
- * 创建日期：16/11/8
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
  * 版本号：1.0.0
- * 功能说明：处理返回结果的类
+ * 描述：
  */
 
 public abstract class NetWorkResponseUtil<T extends DataInterface>{

@@ -14,12 +14,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * 创建者：韦小宝
- * 创建日期：16/10/27
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
  * 版本号：1.0.0
- * 功能说明：提供网络方法的外部调用，调用者提供在主线程的显示操作
+ * 描述：
  */
-
 public class NetApi {
     private NetWorkRequests netWorkRequests;
     private Retrofit retrofit;
@@ -29,15 +29,15 @@ public class NetApi {
     private NetApi() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.addInterceptor(new RequestInterceptor());
-        httpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
-        httpClientBuilder.readTimeout(10, TimeUnit.SECONDS);
-        httpClientBuilder.writeTimeout(10, TimeUnit.SECONDS);
+        httpClientBuilder.connectTimeout(8, TimeUnit.SECONDS);
+        httpClientBuilder.readTimeout(8, TimeUnit.SECONDS);
+        httpClientBuilder.writeTimeout(8, TimeUnit.SECONDS);
         retrofit = new Retrofit.Builder()
                 .client(httpClientBuilder.build())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl("http://wwww.baidu.com")
+                .baseUrl(Constant.BASEURL)
                 .build();
         netWorkRequests = retrofit.create(NetWorkRequests.class);
     }

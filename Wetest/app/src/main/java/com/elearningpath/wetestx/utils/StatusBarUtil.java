@@ -14,12 +14,12 @@ import android.widget.LinearLayout;
 
 import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.widgets.StatusBarView;
-
 /**
- * Created by Jaeger on 16/2/14.
- *
- * Email: chjie.jaeger@gmail.com
- * GitHub: https://github.com/laobie
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
+ * 版本号：1.0.0
+ * 描述：
  */
 public class StatusBarUtil {
 

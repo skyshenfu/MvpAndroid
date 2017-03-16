@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import butterknife.Unbinder;
 
 /**
- * Created by zhangty on 2017/2/8.
- *  一个抽象类，所有关于Mvp有关Fragment的父类,主要封装Presenter的销毁方法，防止内存泄漏
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
+ * 版本号：1.0.0
+ * 描述：
  */
-
 public abstract class BaseFragment<P extends BasePresenterImpl> extends Fragment {
     protected Context context;
     protected Unbinder unbinder;

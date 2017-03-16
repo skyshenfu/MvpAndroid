@@ -1,8 +1,11 @@
 package com.elearningpath.wetestx.base;
 
-/*
- *Created by zhangty on 2017/2/7.
- *所有和试图相关Model的父类，要抽取共性
+/**
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
+ * 版本号：1.0.0
+ * 描述：
  */
 
 public class BaseModel {

@@ -2,11 +2,12 @@ package com.elearningpath.wetestx.base;
 
 import android.util.Log;
 
-import java.lang.ref.WeakReference;
-
 /**
- * Created by zhangty on 2017/2/7.
- * 抽象类,封装了解绑View和Presenter之间的具体逻辑
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
+ * 版本号：1.0.0
+ * 描述：
  */
 
     public abstract class BasePresenterImpl<T extends BaseView> implements BasePresenter{

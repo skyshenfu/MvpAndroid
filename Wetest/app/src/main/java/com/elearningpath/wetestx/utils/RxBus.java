@@ -6,10 +6,11 @@ import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
 /**
- * 创建者：韦小宝
- * 创建日期：16/11/16
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
  * 版本号：1.0.0
- * 功能说明：
+ * 描述：
  */
 public class RxBus {
 

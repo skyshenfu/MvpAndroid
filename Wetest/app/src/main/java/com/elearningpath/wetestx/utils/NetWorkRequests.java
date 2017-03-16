@@ -8,7 +8,6 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * 创建者：韦小宝
  * 创建日期：16/10/27
  * 版本号：1.0.0
  * 功能说明：网络请求的接口用法和Spring Data类似由于本app中使用了

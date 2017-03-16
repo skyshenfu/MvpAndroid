@@ -17,8 +17,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by zhangty on 2017/2/7.
- * 列举了一个MainPresent作为样例
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
+ * 版本号：1.0.0
+ * 描述：
  */
 
 public class MainPresenter extends BasePresenterImpl<MainView> {

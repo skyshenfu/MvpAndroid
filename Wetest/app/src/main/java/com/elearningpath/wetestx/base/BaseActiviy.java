@@ -25,8 +25,11 @@ import dagger.Lazy;
 import rx.Subscription;
 
 /**
- * Created by zhangty on 2017/2/7.
- * 一个抽象类，所有关于Mvp有关Activity的父类,主要封装resenter的销毁方法，防止内存泄漏
+ * Created by zty
+ * 个人github地址：http://www.github.com/skyshenfu
+ * 日期：2017/3/16
+ * 版本号：1.0.0
+ * 描述：
  */
 
 public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActivity {
