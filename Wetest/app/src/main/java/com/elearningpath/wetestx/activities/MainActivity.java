@@ -19,7 +19,6 @@ import com.elearningpath.wetestx.configs.modules.RxbusSubscriptionModule;
 import com.elearningpath.wetestx.events.Event;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.presenters.MainPresenter;
-import com.elearningpath.wetestx.views.MainView;
 
 import javax.inject.Inject;
 
