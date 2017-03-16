@@ -1,9 +1,20 @@
 package com.elearningpath.wetestx.presenters;
 
+import android.content.Context;
+import android.content.Intent;
+
+import com.elearningpath.wetestx.activities.VideoActivity;
 import com.elearningpath.wetestx.base.BasePresenterImpl;
 import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.models.MainModel;
+import com.elearningpath.wetestx.stream.Config;
+import com.elearningpath.wetestx.stream.SWCodecCameraStreamingActivity;
 import com.elearningpath.wetestx.utils.RetrofitCancel;
+import com.orhanobut.logger.Logger;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -27,8 +38,8 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
     @Inject
     Lazy<MainModel> lazyMainModel;
     @Inject
-    public MainPresenter(BaseView view) {
-        super(view);
+    public MainPresenter(BaseView view, Context context) {
+        super(view,context);
     }
 
     public void loadData(){
@@ -62,7 +73,42 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
                 .subscribe(subscriber);
 
     }
+    public String requestStream(String appServerUrl) {
+        try {
+            HttpURLConnection httpConn = (HttpURLConnection) new URL(appServerUrl).openConnection();
+            httpConn.setRequestMethod("POST");
+            httpConn.setConnectTimeout(5000);
+            httpConn.setReadTimeout(10000);
+            int responseCode = httpConn.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
 
+            int length = httpConn.getContentLength();
+            if (length <= 0) {
+                length = 16*1024;
+            }
+            InputStream is = httpConn.getInputStream();
+            byte[] data = new byte[length];
+            int read = is.read(data);
+            is.close();
+            if (read <= 0) {
+                return null;
+            }
+            return new String(data, 0, read);
+        } catch (Exception e) {
+            Logger.e("Network error!");
+        }
+        return null;
+    }
+    public void startVideoPlay(){
+        context.startActivity(new Intent(context,VideoActivity.class));
+    }
+    private void startLiveShow(String url){
+        Intent intent=new Intent(context, SWCodecCameraStreamingActivity.class);
+        intent.putExtra(Config.EXTRA_KEY_PUB_URL,url);
+        context.startActivity(intent);
+    }
     @Override
     public void initMvpView() {
 

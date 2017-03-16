@@ -1,5 +1,6 @@
 package com.elearningpath.wetestx.base;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -12,8 +13,10 @@ import android.util.Log;
 
     public abstract class BasePresenterImpl<T extends BaseView> implements BasePresenter{
     protected T view;
-    public BasePresenterImpl(T view) {
+    protected Context context;
+    public BasePresenterImpl(T view,Context context) {
         this.view = view;
+        this.context=context;
     }
 
     @Override
@@ -21,8 +24,10 @@ import android.util.Log;
         if (view !=null){
             Log.e("TAG", "detachMvpView: 1");
             view=null;
-        }else {
-            Log.e("TAG", "detachMvpView: 2");
+        }
+        if (context !=null){
+            Log.e("TAG", "detachMvpView: 1");
+            context=null;
         }
     }
 

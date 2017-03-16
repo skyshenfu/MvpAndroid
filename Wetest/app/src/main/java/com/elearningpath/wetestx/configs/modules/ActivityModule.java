@@ -16,7 +16,7 @@ import dagger.Provides;
  */
 @Module
 public class ActivityModule {
-    Context context;
+    private Context context;
 
     public ActivityModule(Context context) {
         this.context = context;

@@ -1,5 +1,7 @@
 package com.elearningpath.wetestx.configs.modules;
 
+import android.content.Context;
+
 import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.configs.scope.ActivityScope;
 import com.elearningpath.wetestx.views.MainView;
@@ -16,14 +18,21 @@ import dagger.Provides;
  */
 @Module
 public class MainModule {
-    private final BaseView mView;
+    private  BaseView mView;
+    private  Context context;
 
-    public MainModule(BaseView mView) {
+    public MainModule(BaseView mView,Context context) {
         this.mView = mView;
+        this.context=context;
     }
     @Provides
     @ActivityScope
     BaseView provideMainView(){
         return mView;
+    }
+    @Provides
+    @ActivityScope
+    Context provideContext(){
+        return  context;
     }
 }

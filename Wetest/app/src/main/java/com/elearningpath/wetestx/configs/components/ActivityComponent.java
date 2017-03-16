@@ -1,6 +1,7 @@
 package com.elearningpath.wetestx.configs.components;
 
 import com.elearningpath.wetestx.activities.MainActivity;
+import com.elearningpath.wetestx.configs.modules.ActivityModule;
 import com.elearningpath.wetestx.configs.modules.MainModule;
 import com.elearningpath.wetestx.configs.modules.ProgressMoudle;
 import com.elearningpath.wetestx.configs.modules.RxbusSubscriptionModule;
@@ -16,7 +17,7 @@ import dagger.Component;
  * 描述：
  */
 @ActivityScope
-@Component(modules = {MainModule.class, ProgressMoudle.class,RxbusSubscriptionModule.class})
+@Component(modules = {MainModule.class,ProgressMoudle.class,RxbusSubscriptionModule.class})
 public interface ActivityComponent {
     void inject(MainActivity mainActivity);
 }

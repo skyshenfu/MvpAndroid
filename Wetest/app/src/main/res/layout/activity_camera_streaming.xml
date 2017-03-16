@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal" >
 
-        <com.qiniu.pili.droid.streaming.demo.CameraPreviewFrameView
+        <com.elearningpath.wetestx.stream.CameraPreviewFrameView
             android:id="@+id/cameraPreview_surfaceView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

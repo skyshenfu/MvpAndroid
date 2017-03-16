@@ -14,12 +14,15 @@ import com.elearningpath.wetestx.base.BaseActiviy;
 import com.elearningpath.wetestx.base.BaseModel;
 import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.configs.components.DaggerActivityComponent;
+import com.elearningpath.wetestx.configs.modules.ActivityModule;
 import com.elearningpath.wetestx.configs.modules.MainModule;
 import com.elearningpath.wetestx.configs.modules.ProgressMoudle;
 import com.elearningpath.wetestx.configs.modules.RxbusSubscriptionModule;
 import com.elearningpath.wetestx.events.Event;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.presenters.MainPresenter;
+import com.elearningpath.wetestx.stream.Config;
+import com.elearningpath.wetestx.stream.SWCodecCameraStreamingActivity;
 
 import javax.inject.Inject;
 
@@ -51,7 +54,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
         setContentView(R.layout.activity_main);
         unbinder=ButterKnife.bind(this);
         DaggerActivityComponent.builder()
-                .mainModule(new MainModule(this))
+                .mainModule(new MainModule(this,this))
                 .progressMoudle(new ProgressMoudle(this))
                 .rxbusSubscriptionModule(new RxbusSubscriptionModule(new Action1<Event>() {
                     @Override
@@ -79,7 +82,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
                 presenter.loadData();
                 break;
             case R.id.watch_button:
-                startActivity(new Intent(this,VideoActivity.class));
+                presenter.startVideoPlay();
                 break;
             case R.id.act_button:
                 break;
