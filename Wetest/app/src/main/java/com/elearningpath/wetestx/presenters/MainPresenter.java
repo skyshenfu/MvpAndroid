@@ -2,6 +2,7 @@ package com.elearningpath.wetestx.presenters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.elearningpath.wetestx.activities.VideoActivity;
 import com.elearningpath.wetestx.base.BasePresenterImpl;
@@ -10,6 +11,7 @@ import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.stream.Config;
 import com.elearningpath.wetestx.stream.SWCodecCameraStreamingActivity;
 import com.elearningpath.wetestx.utils.RetrofitCancel;
+import com.elearningpath.wetestx.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
 
 import java.io.InputStream;
@@ -97,7 +99,7 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
             }
             return new String(data, 0, read);
         } catch (Exception e) {
-            Logger.e("Network error!");
+            ToastUtil.showToast(context,"Network error!",Toast.LENGTH_SHORT);
         }
         return null;
     }
