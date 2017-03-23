@@ -40,18 +40,17 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
     @Inject
     Lazy<MainModel> lazyMainModel;
     @Inject
-    public MainPresenter(BaseView view, Context context) {
-        super(view,context);
+    public MainPresenter() {
     }
 
     public void loadData(){
         //模拟网络耗时操作
-        view.showProgress();
+        getView().showProgress();
         final RetrofitCancel retrofitCancel=new RetrofitCancel();
        Subscriber<Long> subscriber= new Subscriber<Long>() {
             @Override
             public void onCompleted() {
-                view.hideProgress();
+                getView().hideProgress();
                 retrofitCancel.timerStop();
             }
 
@@ -63,7 +62,7 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
             public void onNext(Long aLong) {
                 lazyMainModel.get().setTitle("标题"+ new Random().nextInt(200));
                 lazyMainModel.get().setNumberStr("内容"+new Random().nextInt(200));
-                view.showData(lazyMainModel.get());
+                getView().showData(lazyMainModel.get());
             }
         };
         retrofitCancel.setSubscriber(subscriber);
@@ -99,17 +98,17 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
             }
             return new String(data, 0, read);
         } catch (Exception e) {
-            ToastUtil.showToast(context,"Network error!",Toast.LENGTH_SHORT);
+            ToastUtil.showToast(getContext(),"Network error!",Toast.LENGTH_SHORT);
         }
         return null;
     }
     public void startVideoPlay(){
-        context.startActivity(new Intent(context,VideoActivity.class));
+        getContext().startActivity(new Intent(getContext(),VideoActivity.class));
     }
     private void startLiveShow(String url){
-        Intent intent=new Intent(context, SWCodecCameraStreamingActivity.class);
+        Intent intent=new Intent(getContext(), SWCodecCameraStreamingActivity.class);
         intent.putExtra(Config.EXTRA_KEY_PUB_URL,url);
-        context.startActivity(intent);
+        getContext().startActivity(intent);
     }
     @Override
     public void initMvpView() {

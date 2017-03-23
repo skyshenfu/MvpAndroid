@@ -17,7 +17,7 @@ import dagger.Component;
  * 描述：
  */
 @ActivityScope
-@Component(modules = {MainModule.class,ProgressMoudle.class,RxbusSubscriptionModule.class})
+@Component(modules = {ProgressMoudle.class,RxbusSubscriptionModule.class})
 public interface ActivityComponent {
     void inject(MainActivity mainActivity);
 }
