@@ -42,7 +42,6 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
     @Inject
     public MainPresenter() {
     }
-
     public void loadData(){
         //模拟网络耗时操作
         getView().showProgress();
@@ -105,7 +104,7 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
     public void startVideoPlay(){
         getContext().startActivity(new Intent(getContext(),VideoActivity.class));
     }
-    private void startLiveShow(String url){
+    public void startLiveShow(String url){
         Intent intent=new Intent(getContext(), SWCodecCameraStreamingActivity.class);
         intent.putExtra(Config.EXTRA_KEY_PUB_URL,url);
         getContext().startActivity(intent);

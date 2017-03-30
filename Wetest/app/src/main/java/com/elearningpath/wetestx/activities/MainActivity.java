@@ -82,6 +82,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
                 presenter.startVideoPlay();
                 break;
             case R.id.act_button:
+                presenter.startLiveShow("URL:rtmp://pili-publish.eupup.com/elearning/test?e=1490839623&token=_Z8oaTbALjft_zHJ7ebR-UromU0ephC3Ld874AfQ:_QeNsS_BWOHuf5B01nzxoUqEzRw=");
                 break;
         }
 

@@ -30,5 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.VideoActivity" android:launchMode="singleTop" android:screenOrientation="landscape"/>
+        <activity android:name=".stream.SWCodecCameraStreamingActivity"/>
     </application>
 </manifest>
