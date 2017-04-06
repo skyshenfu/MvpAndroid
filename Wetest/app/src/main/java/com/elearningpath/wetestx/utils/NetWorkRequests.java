@@ -1,10 +1,9 @@
 package com.elearningpath.wetestx.utils;
 
-import okhttp3.RequestBody;
-import retrofit2.http.Multipart;
+import com.elearningpath.wetestx.beans.ApiResponse;
+import com.elearningpath.wetestx.beans.ArticleTypeBean;
+
 import retrofit2.http.POST;
-import retrofit2.http.Part;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -26,5 +25,7 @@ public interface NetWorkRequests {
     @POST("/mobile/friend/getBPAndBS.json")
     public Observable<ApiResponse<FriendSugarAndPressBean>> getFriendSugarAndPressBean(@Query("uid") long uid);
 */
+    @POST("/mobile/articleClass/list.json")
+        public Observable<ApiResponse<ArticleTypeBean>> getArticleResult();
 
 }

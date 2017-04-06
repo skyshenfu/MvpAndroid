@@ -2,6 +2,9 @@ package com.elearningpath.wetestx.utils;
 
 import android.util.Log;
 
+import com.elearningpath.wetestx.beans.ApiResponse;
+import com.elearningpath.wetestx.beans.ArticleTypeBean;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -65,7 +68,9 @@ public class NetApi {
 /*    public void getLoginResult(Subscriber<ApiResponse<LogInBean>> subscriber, String name, String password) {
         netWorkRequests.getLoginResult(name, password).compose(schedulersTransformer()).subscribe(subscriber);
     }*/
-
+ public Observable<ApiResponse<ArticleTypeBean>> getArticleResult() {
+        return netWorkRequests.getArticleResult();
+    }
     //一个内部类，抽象了线程调度逻辑
     Observable.Transformer schedulersTransformer() {
         return new Observable.Transformer() {

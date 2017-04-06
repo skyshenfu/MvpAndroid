@@ -10,6 +10,6 @@ package com.elearningpath.wetestx.utils;
 
 public class Constant {
     public static boolean ISDEBUGMODE=true;
-    public static final  String BASEURL="";
+    public static final  String BASEURL="http://all-help.com/";
     public static final String  LOGGERTAG="DEBUGINFO";
 }

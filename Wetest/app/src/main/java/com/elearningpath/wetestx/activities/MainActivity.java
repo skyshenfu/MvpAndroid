@@ -38,12 +38,12 @@ import rx.functions.Action1;
 public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView {
     @Inject
     Subscription rxSbscription;
-    @BindView(R.id.title_textview)
-    TextView titleTextView;
     @BindView(R.id.content_textview)
     TextView contentTextView;
     @BindView(R.id.change_button)
     Button button;
+    @BindView(R.id.remote_button)
+    Button remoteButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setActivityType(0,"标题",true);
@@ -72,7 +72,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
     public void showProgress() {
         lazyProgressUtils.get().progressShow();
     }
-    @OnClick({R.id.change_button,R.id.act_button,R.id.watch_button})
+    @OnClick({R.id.change_button,R.id.act_button,R.id.watch_button,R.id.remote_button})
     void onClick(View view){
         switch (view.getId()){
             case R.id.change_button:
@@ -83,6 +83,9 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
                 break;
             case R.id.act_button:
                 presenter.startLiveShow("URL:rtmp://pili-publish.eupup.com/elearning/test?e=1490839623&token=_Z8oaTbALjft_zHJ7ebR-UromU0ephC3Ld874AfQ:_QeNsS_BWOHuf5B01nzxoUqEzRw=");
+                break;
+            case R.id.remote_button:
+                presenter.loadRemoteData();
                 break;
         }
 
@@ -95,7 +98,6 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
     @Override
     public void showData(@Nullable BaseModel model) {
         MainModel mainModel= (MainModel) model;
-        titleTextView.setText(mainModel.getTitle());
         contentTextView.setText(mainModel.getNumberStr());
     }
 

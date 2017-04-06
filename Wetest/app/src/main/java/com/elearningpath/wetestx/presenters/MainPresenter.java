@@ -1,18 +1,20 @@
 package com.elearningpath.wetestx.presenters;
 
-import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.elearningpath.wetestx.activities.VideoActivity;
 import com.elearningpath.wetestx.base.BasePresenterImpl;
 import com.elearningpath.wetestx.base.BaseView;
+import com.elearningpath.wetestx.beans.ApiResponse;
+import com.elearningpath.wetestx.beans.ArticleTypeBean;
+import com.elearningpath.wetestx.models.ArticleTypeModel;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.stream.Config;
 import com.elearningpath.wetestx.stream.SWCodecCameraStreamingActivity;
 import com.elearningpath.wetestx.utils.RetrofitCancel;
 import com.elearningpath.wetestx.utils.ToastUtil;
-import com.orhanobut.logger.Logger;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -40,6 +42,8 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
     @Inject
     Lazy<MainModel> lazyMainModel;
     @Inject
+    Lazy<ArticleTypeModel> lazyArticleTypeModel;
+    @Inject
     public MainPresenter() {
     }
     public void loadData(){
@@ -59,7 +63,6 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
 
             @Override
             public void onNext(Long aLong) {
-                lazyMainModel.get().setTitle("标题"+ new Random().nextInt(200));
                 lazyMainModel.get().setNumberStr("内容"+new Random().nextInt(200));
                 getView().showData(lazyMainModel.get());
             }
@@ -71,6 +74,33 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+
+    }
+    public void loadRemoteData(){
+        //模拟网络耗时操作
+        getView().showProgress();
+        final RetrofitCancel retrofitCancel=new RetrofitCancel();
+        Subscriber<ApiResponse<ArticleTypeBean>> subscriber= new Subscriber<ApiResponse<ArticleTypeBean>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ApiResponse<ArticleTypeBean> mainBeanApiResponse) {
+                lazyArticleTypeModel.get().setArticleTypeBean(mainBeanApiResponse.getData());
+                Log.e("ssss", "onNext: ");
+
+            }
+        };
+        retrofitCancel.setSubscriber(subscriber);
+        retrofitCancel.timerStart();
+        lazyArticleTypeModel.get().getArticleTypeRemote().compose(schedulersTransformer()).subscribe(subscriber);
 
     }
     public String requestStream(String appServerUrl) {

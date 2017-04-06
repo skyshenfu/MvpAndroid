@@ -5,13 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
     <TextView
-        android:id="@+id/title_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="标题" />
-    <TextView
         android:layout_marginTop="20dp"
-        android:layout_below="@id/title_textview"
         android:id="@+id/content_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,6 +29,13 @@
         android:text="进行直播"
         android:layout_marginTop="20.92dp"
         android:layout_below="@id/watch_button"
+        android:layout_width="@dimen/x500"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/remote_button"
+        android:text="请求数据"
+        android:layout_marginTop="20.92dp"
+        android:layout_below="@id/act_button"
         android:layout_width="@dimen/x500"
         android:layout_height="wrap_content" />
 </RelativeLayout>
