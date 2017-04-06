@@ -15,6 +15,7 @@ import com.elearningpath.wetestx.stream.Config;
 import com.elearningpath.wetestx.stream.SWCodecCameraStreamingActivity;
 import com.elearningpath.wetestx.utils.RetrofitCancel;
 import com.elearningpath.wetestx.utils.ToastUtil;
+import com.orhanobut.logger.Logger;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -83,7 +84,8 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
         Subscriber<ApiResponse<ArticleTypeBean>> subscriber= new Subscriber<ApiResponse<ArticleTypeBean>>() {
             @Override
             public void onCompleted() {
-
+                retrofitCancel.timerStop();
+                getView().hideProgress();
             }
 
             @Override
@@ -94,7 +96,7 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
             @Override
             public void onNext(ApiResponse<ArticleTypeBean> mainBeanApiResponse) {
                 lazyArticleTypeModel.get().setArticleTypeBean(mainBeanApiResponse.getData());
-                Log.e("ssss", "onNext: ");
+                Logger.e(mainBeanApiResponse+toString());
 
             }
         };
