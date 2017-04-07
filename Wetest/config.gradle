@@ -27,6 +27,8 @@ ext {
             loadingVersion='1.1.0'
             //内存泄漏检测工具
             leakCanaryVersion='1.5'
+            //greenDao
+            greenDaoVersion='3.2.2'
 
 
 }
