@@ -15,7 +15,6 @@ import okhttp3.Response;
  * 描述：
  */
 public class RequestInterceptor implements Interceptor {
-    private Context context;
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
         Request original = chain.request();

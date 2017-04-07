@@ -5,6 +5,7 @@ import com.elearningpath.wetestx.beans.ApiResponse;
 import com.elearningpath.wetestx.beans.ArticleTypeBean;
 import com.elearningpath.wetestx.pojos.SingleArticle;
 import com.elearningpath.wetestx.utils.NetApi;
+import com.elearningpath.wetestx.utils.NetApiWithCache;
 
 import java.util.List;
 

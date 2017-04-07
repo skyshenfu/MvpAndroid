@@ -31,10 +31,10 @@ public class NetApi {
     //构造方法被设为私有，防止外部使用new来创建对象，破坏单例
     private NetApi() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        httpClientBuilder.addInterceptor(new RequestInterceptor());
-        httpClientBuilder.connectTimeout(8, TimeUnit.SECONDS);
-        httpClientBuilder.readTimeout(8, TimeUnit.SECONDS);
-        httpClientBuilder.writeTimeout(8, TimeUnit.SECONDS);
+        httpClientBuilder.addInterceptor(new RequestInterceptor())
+                        .connectTimeout(8, TimeUnit.SECONDS)
+                        .readTimeout(8, TimeUnit.SECONDS)
+                        .writeTimeout(8, TimeUnit.SECONDS);
         retrofit = new Retrofit.Builder()
                 .client(httpClientBuilder.build())
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -70,17 +70,5 @@ public class NetApi {
     }*/
  public Observable<ApiResponse<ArticleTypeBean>> getArticleResult() {
         return netWorkRequests.getArticleResult();
-    }
-    //一个内部类，抽象了线程调度逻辑
-    Observable.Transformer schedulersTransformer() {
-        return new Observable.Transformer() {
-
-            @Override
-            public Object call(Object observable) {
-                return ((Observable)  observable).subscribeOn(Schedulers.io())
-                        .unsubscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }
-        };
     }
 }

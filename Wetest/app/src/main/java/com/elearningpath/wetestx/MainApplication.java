@@ -1,8 +1,12 @@
 package com.elearningpath.wetestx;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.elearningpath.wetestx.configs.components.AppComponent;
 import com.elearningpath.wetestx.configs.components.DaggerAppComponent;
 import com.elearningpath.wetestx.configs.modules.AppModule;
 import com.elearningpath.wetestx.utils.Constant;
@@ -24,13 +28,26 @@ import javax.inject.Inject;
  */
 
 public class MainApplication extends Application {
+    private static MainApplication myApplication = null;
+
+    public static MainApplication getApplication() {
+        return myApplication;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-     DaggerAppComponent.builder()
-                     .appModule(new AppModule(this))
-                     .build().inject(this);
+        DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .build().inject(this);
+        initConstant();
+        myApplication=this;
         initThirdPartyFrameWork();
+    }
+
+    private void initConstant() {
+        Constant.CACAHEDIR=getApplicationContext().getExternalCacheDir().getAbsolutePath();
+        Logger.e(Constant.CACAHEDIR);
     }
 
     /**
@@ -45,14 +62,31 @@ public class MainApplication extends Application {
         }
         LeakCanary.install(this);
         //Logger一个简练帅气的Logger组件
-        if (Constant.ISDEBUGMODE){
+        if (Constant.ISDEBUGMODE) {
             Logger.init(Constant.LOGGERTAG);
-        }else {
+        } else {
             Logger.init().logLevel(LogLevel.NONE);
         }
         //七牛云视频&没有更坏的地，只有累死的牛
         StreamingEnv.init(getApplicationContext());
 
+    }
+
+    /**
+     * 判断网络状态的方法
+     * @return
+     */
+
+    public static boolean  getNetStatus(){
+        ConnectivityManager connectivity = (ConnectivityManager) MainApplication.getApplication().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity!=null){
+            NetworkInfo info=connectivity.getActiveNetworkInfo();
+            if (info != null && info.getState()== NetworkInfo.State.CONNECTED) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -1,5 +1,9 @@
 package com.elearningpath.wetestx.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 /**
  * Created by zty
  * 个人github地址：http://www.github.com/skyshenfu
@@ -12,4 +16,7 @@ public class Constant {
     public static boolean ISDEBUGMODE=true;
     public static final  String BASEURL="http://all-help.com/";
     public static final String  LOGGERTAG="DEBUGINFO";
+    public static String CACAHEDIR="";
+    public static final long CACHEMAXSIZE=10*1024*1024;
+
 }
