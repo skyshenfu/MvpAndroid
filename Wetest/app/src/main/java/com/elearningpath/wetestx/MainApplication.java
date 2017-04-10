@@ -68,7 +68,6 @@ public class MainApplication extends Application {
 
     private void initConstant() {
         Constant.CACAHEDIR=getApplicationContext().getExternalCacheDir().getAbsolutePath();
-        Logger.e(Constant.CACAHEDIR);
     }
 
     /**

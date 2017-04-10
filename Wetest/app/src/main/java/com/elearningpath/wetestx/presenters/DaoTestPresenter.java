@@ -34,7 +34,6 @@ public class DaoTestPresenter extends BasePresenterImpl<BaseView> {
             singleArticle.setOwnerId(b);
         }
         MainApplication.getMyApplication().getDaoSession().getSingleArticleDao().insertInTx(articleTypeBean.getDataList());
-        Logger.e(b+"");
     }
     public void deleteTest(long id){
         MainApplication.getMyApplication().getDaoSession().getArticleTypeBeanDao().deleteByKey(id);
