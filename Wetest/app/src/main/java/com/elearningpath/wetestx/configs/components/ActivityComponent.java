@@ -1,5 +1,6 @@
 package com.elearningpath.wetestx.configs.components;
 
+import com.elearningpath.wetestx.activities.DaoTestActivity;
 import com.elearningpath.wetestx.activities.MainActivity;
 import com.elearningpath.wetestx.configs.modules.ActivityModule;
 import com.elearningpath.wetestx.configs.modules.MainModule;
@@ -20,4 +21,5 @@ import dagger.Component;
 @Component(modules = {ProgressMoudle.class,RxbusSubscriptionModule.class})
 public interface ActivityComponent {
     void inject(MainActivity mainActivity);
+    void inject(DaoTestActivity daoTestActivity);
 }

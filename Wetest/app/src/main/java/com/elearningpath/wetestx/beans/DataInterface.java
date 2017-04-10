@@ -11,7 +11,6 @@ package com.elearningpath.wetestx.beans;
 public abstract class DataInterface {
     protected int error;
     protected String message;
-
     public int getError() {
         return error;
     }

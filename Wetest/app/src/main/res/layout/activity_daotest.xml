@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <Button
+        android:layout_marginTop="@dimen/y10"
+        android:id="@+id/button_insert"
+        android:text="INSERT"
+        android:layout_width="@dimen/x450"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_marginTop="@dimen/y10"
+        android:id="@+id/button_delete"
+        android:text="DELETE"
+        android:layout_width="@dimen/x450"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_marginTop="@dimen/y10"
+        android:id="@+id/button_update"
+        android:text="UPDATE"
+        android:layout_width="@dimen/x450"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_marginTop="@dimen/y10"
+        android:id="@+id/button_find"
+        android:text="FIND"
+        android:layout_width="@dimen/x450"
+        android:layout_height="wrap_content" />
+</LinearLayout>

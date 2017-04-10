@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.elearningpath.wetestx.activities.DaoTestActivity;
 import com.elearningpath.wetestx.activities.VideoActivity;
 import com.elearningpath.wetestx.base.BasePresenterImpl;
 import com.elearningpath.wetestx.base.BaseView;
@@ -96,7 +97,9 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
             @Override
             public void onNext(ApiResponse<ArticleTypeBean> mainBeanApiResponse) {
                 lazyArticleTypeModel.get().setArticleTypeBean(mainBeanApiResponse.getData());
-                Logger.e(mainBeanApiResponse+toString());
+                Intent intent=new Intent(getContext(), DaoTestActivity.class);
+                intent.putExtra("DATA",lazyArticleTypeModel.get().getArticleTypeBean());
+                getContext().startActivity(intent);
 
             }
         };

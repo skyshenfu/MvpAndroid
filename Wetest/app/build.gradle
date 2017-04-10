@@ -18,6 +18,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    greendao{
+        daoPackage'com.elearningpath.wetestx.greendao.gen'
+        targetGenDir'src/main/java'
+    }
 }
 
 dependencies {
@@ -41,7 +45,7 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-scalars:$rootProject.retrofitVersion"
-    //Retrofit是基于okheep的以下是okhttp的依赖
+    //Retrofit是基于okhttp的以下是okhttp的依赖
     compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
     //一个通用的RecyclerViewAdapter
@@ -63,5 +67,7 @@ dependencies {
     compile "com.github.ybq:Android-SpinKit:$rootProject.loadingVersion"
     //GreenDao一个数据库ORM框架
     compile "org.greenrobot:greendao:$rootProject.greenDaoVersion"
+    //一个用浏览器查看数据库的工具
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
 
 }
