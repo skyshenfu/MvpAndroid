@@ -13,7 +13,7 @@ import android.net.NetworkInfo;
  */
 
 public class Constant {
-    public static boolean ISDEBUGMODE=true;
+    public static boolean ISDEBUGMODE=false;
     public static final  String BASEURL="http://all-help.com/";
     public static final String  LOGGERTAG="DEBUGINFO";
     public static String CACAHEDIR="";

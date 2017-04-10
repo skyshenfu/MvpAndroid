@@ -19,6 +19,7 @@ android {
         }
     }
     greendao{
+        schemaVersion 3
         daoPackage'com.elearningpath.wetestx.greendao.gen'
         targetGenDir'src/main/java'
     }

@@ -5,21 +5,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
-import com.elearningpath.wetestx.configs.components.AppComponent;
 import com.elearningpath.wetestx.configs.components.DaggerAppComponent;
 import com.elearningpath.wetestx.configs.modules.AppModule;
 import com.elearningpath.wetestx.greendao.gen.DaoMaster;
 import com.elearningpath.wetestx.greendao.gen.DaoSession;
 import com.elearningpath.wetestx.utils.Constant;
-import com.elearningpath.wetestx.utils.NetApi;
+import com.elearningpath.wetestx.utils.CustomDBHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.squareup.leakcanary.LeakCanary;
-
-import javax.inject.Inject;
 
 
 /**
@@ -32,7 +28,7 @@ import javax.inject.Inject;
 
 public class MainApplication extends Application {
     private static MainApplication myApplication = null;
-    private DaoMaster.DevOpenHelper mHelper;
+    private DaoMaster.OpenHelper mHelper;
     private SQLiteDatabase db;
     private DaoMaster mDaoMaster;
     private DaoSession mDaoSession;
@@ -51,13 +47,19 @@ public class MainApplication extends Application {
         initConstant();
         initThirdPartyFrameWork();
     }
-
+/*
+    *关于数据库的操作
+    *Debug模式判断，如果目前是开发者模式，数据库一旦发生了升级行为先销毁表再创建表，数据丢失
+    *如果目前不是开发者模式则采取先复制表为一个TMP_加原来表明的表，销毁数据库之后重建会将原来的表复制回去并且回复原来的名字
+    *那些表需要复制回去要在utils包下面的的CustomDBHelper类下面的onUpgrade方法中加入对应的class
+    */
     private void initDataBase() {
         // 通过DaoMaster 的内部类 DevOpenHelper，你可以得到一个便利的SQLiteOpenHelper 对象。
-        // 可能你已经注意到了，你并不需要去编写「CREATE TABLE」这样的 SQL 语句，因为greenDAO 已经帮你做了。
-        // 注意：默认的DaoMaster.DevOpenHelper 会在数据库升级时，删除所有的表，意味着这将导致数据的丢失。
-        // 所以，在正式的项目中，你还应该做一层封装，来实现数据库的安全升级。
-        mHelper = new DaoMaster.DevOpenHelper(this,"wetestx-db", null);
+        if (Constant.ISDEBUGMODE){
+            mHelper = new DaoMaster.DevOpenHelper(this,"wetestx-db", null);
+        }else {
+            mHelper=new CustomDBHelper(this,"wetestx-db", null);
+        }
         db =mHelper.getWritableDatabase();
         // 注意：该数据库连接属于DaoMaster，所以多个 Session 指的是相同的数据库连接。
         mDaoMaster = new DaoMaster(db);
