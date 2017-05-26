@@ -3,8 +3,8 @@ package com.elearningpath.wetestx.utils;
 import com.elearningpath.wetestx.beans.ApiResponse;
 import com.elearningpath.wetestx.beans.ArticleTypeBean;
 
+import io.reactivex.Observable;
 import retrofit2.http.POST;
-import rx.Observable;
 
 /**
  * 创建日期：16/10/27

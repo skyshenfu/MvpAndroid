@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.elearningpath.wetestx.R;
-import com.elearningpath.wetestx.base.BaseActiviy;
+import com.elearningpath.wetestx.base.BaseActivity;
 import com.elearningpath.wetestx.base.BaseModel;
 import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.beans.ArticleTypeBean;
@@ -22,8 +22,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.functions.Action1;
-
+import io.reactivex.functions.Consumer;
 /**
  * Created by zty
  * 个人github地址：http://www.github.com/skyshenfu
@@ -32,7 +31,7 @@ import rx.functions.Action1;
  * 描述：
  */
 
-public class DaoTestActivity extends BaseActiviy<DaoTestPresenter> implements BaseView{
+public class DaoTestActivity extends BaseActivity<DaoTestPresenter> implements BaseView{
     @BindView(R.id.button_insert)
     Button insertButton;
     @BindView(R.id.button_delete)
@@ -49,9 +48,9 @@ public class DaoTestActivity extends BaseActiviy<DaoTestPresenter> implements Ba
         unbinder= ButterKnife.bind(this);
         DaggerActivityComponent.builder()
                 .progressMoudle(new ProgressMoudle(this))
-                .rxbusSubscriptionModule(new RxbusSubscriptionModule(new Action1<Event>() {
+                .rxbusSubscriptionModule(new RxbusSubscriptionModule(new Consumer<Event>() {
                     @Override
-                    public void call(Event event) {
+                    public void accept(Event event) throws Exception {
                         if (event.getName().equals("ABC")){
                             Log.e("TAG", "call: ");
                         }

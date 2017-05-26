@@ -38,4 +38,11 @@
         android:layout_below="@id/act_button"
         android:layout_width="@dimen/x500"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/rxbus_button"
+        android:text="测试Rxbus"
+        android:layout_marginTop="20.92dp"
+        android:layout_below="@id/remote_button"
+        android:layout_width="@dimen/x500"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -7,11 +7,14 @@ import com.elearningpath.wetestx.R;
 import com.elearningpath.wetestx.widgets.LoadingDialog;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by zty
@@ -24,10 +27,13 @@ import rx.schedulers.Schedulers;
 public class ProgressUtils {
     private LoadingDialog progress;
     private Context context;
-    private Subscriber subscriber;
+    private DisposableObserver<Long> disposableObserver;
 
+    public DisposableObserver<Long> getDisposableObserver() {
+        return disposableObserver;
+    }
 
-    public ProgressUtils( Context context) {
+    public ProgressUtils(Context context) {
         this.context = context;
     }
 
@@ -36,10 +42,11 @@ public class ProgressUtils {
             initProgress();
         }
         progress.show();
-        subscriber=new Subscriber<Long>() {
+        disposableObserver=new DisposableObserver<Long>() {
             @Override
-            public void onCompleted() {
-
+            public void onNext(Long aLong) {
+                progressDismiss();
+                Toast.makeText(context, "网络情况太差，请重试", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -48,9 +55,7 @@ public class ProgressUtils {
             }
 
             @Override
-            public void onNext(Long aLong) {
-                progressDismiss();
-                Toast.makeText(context, "网络情况太差，请重试", Toast.LENGTH_SHORT).show();
+            public void onComplete() {
 
             }
         };
@@ -58,7 +63,7 @@ public class ProgressUtils {
                 .subscribeOn(Schedulers.io())
                 .take(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
+                .subscribe(disposableObserver);
     }
 
     private void initProgress() {
@@ -68,10 +73,12 @@ public class ProgressUtils {
         if (progress!=null) {
             if (progress.isShowing()) {
                 progress.dismiss();
+                com.orhanobut.logger.Logger.e("我消失");
             }
         }
-        if (subscriber!=null&&!subscriber.isUnsubscribed()){
-            subscriber.unsubscribe();
+        if (disposableObserver!=null&&!disposableObserver.isDisposed()){
+            disposableObserver.dispose();
+            com.orhanobut.logger.Logger.e("我取消订阅");
         }
     }
 }

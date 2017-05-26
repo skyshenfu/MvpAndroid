@@ -1,76 +1,39 @@
 package com.elearningpath.wetestx.utils;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
-/**
- * Created by zty
- * 个人github地址：http://www.github.com/skyshenfu
- * 日期：2017/3/16
- * 版本号：1.0.0
- * 描述：
- */
 public class RxBus {
 
-    private static volatile RxBus mInstance;
+    private final Subject<Object> mBus;
 
-    private final Subject bus;
-
-
-    public RxBus()
-    {
-        bus = new SerializedSubject<>(PublishSubject.create());
+    private RxBus() {
+        // toSerialized method made bus thread safe
+        mBus = PublishSubject.create().toSerialized();
     }
 
-    /**
-     * 单例模式RxBus
-     *
-     * @return
-     */
-    public static RxBus getInstance()
-    {
-
-        RxBus rxBus2 = mInstance;
-        if (mInstance == null)
-        {
-            synchronized (RxBus.class)
-            {
-                rxBus2 = mInstance;
-                if (mInstance == null)
-                {
-                    rxBus2 = new RxBus();
-                    mInstance = rxBus2;
-                }
-            }
-        }
-
-        return rxBus2;
+    public static RxBus getInstance() {
+        return Holder.BUS;
     }
 
-
-    /**
-     * 发送消息
-     *
-     * @param object
-     */
-    public void post(Object object)
-    {
-
-        bus.onNext(object);
-
+    public void post(Object obj) {
+        mBus.onNext(obj);
     }
 
-    /**
-     * 接收消息
-     *
-     * @param eventType
-     * @param <T>
-     * @return
-     */
-    public <T> Observable<T> toObserverable(Class<T> eventType)
-    {
-        return bus.ofType(eventType);
+    public <T> Observable<T> toObservable(Class<T> tClass) {
+        return mBus.ofType(tClass);
+    }
+
+    public Observable<Object> toObservable() {
+        return mBus;
+    }
+
+    public boolean hasObservers() {
+        return mBus.hasObservers();
+    }
+
+    private static class Holder {
+        private static final RxBus BUS = new RxBus();
     }
 }

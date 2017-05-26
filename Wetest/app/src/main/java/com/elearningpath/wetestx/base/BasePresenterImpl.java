@@ -6,9 +6,12 @@ import java.lang.ref.WeakReference;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by zty
@@ -21,6 +24,12 @@ import rx.schedulers.Schedulers;
     public abstract class BasePresenterImpl<V extends BaseView> implements BasePresenter{
     protected WeakReference<V> viewRefs;
     protected WeakReference<Context> contextRefs;
+    protected CompositeDisposable compositeDisposable;
+
+    public CompositeDisposable getCompositeDisposable() {
+        return compositeDisposable;
+    }
+
     @Override
     public void detachMvpView() {
         if (viewRefs!=null){
@@ -34,18 +43,19 @@ import rx.schedulers.Schedulers;
             contextRefs=null;
         }
     }
-    protected Observable.Transformer schedulersTransformer() {
-        return new Observable.Transformer() {
+    protected ObservableTransformer schedulersTransformer() {
+        return new ObservableTransformer() {
 
             @Override
-            public Object call(Object observable) {
-                return ((Observable)  observable).subscribeOn(Schedulers.io())
+            public ObservableSource apply(Observable upstream) {
+                return upstream.subscribeOn(Schedulers.io())
                         .unsubscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
     public void attachMvpView(V view,Context context) {
+        compositeDisposable=new CompositeDisposable();
         viewRefs=new WeakReference<V>(view);
         contextRefs=new WeakReference<Context>(context);
     }

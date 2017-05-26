@@ -8,13 +8,14 @@ import com.elearningpath.wetestx.events.Event;
 import com.elearningpath.wetestx.utils.ResponseErrorUtil;
 import com.elearningpath.wetestx.utils.RxBus;
 
+import org.reactivestreams.Subscription;
+
 import dagger.Module;
 import dagger.Provides;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by zty
@@ -25,17 +26,17 @@ import rx.schedulers.Schedulers;
  */
 @Module
 public class RxbusSubscriptionModule {
-    private Action1<Event> action;
+    private Consumer<Event> consumer;
 
-    public RxbusSubscriptionModule(Action1<Event> action) {
-        this.action = action;
+    public RxbusSubscriptionModule(Consumer<Event> consumer) {
+        this.consumer = consumer;
     }
     @Provides
     @ActivityScope
-    Subscription provideSubscription(){
-        return RxBus.getInstance().toObserverable(Event.class)
+    Disposable provideSubscription(){
+        return RxBus.getInstance().toObservable(Event.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this.action);
+                .subscribe();
     }
 }

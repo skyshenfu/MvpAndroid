@@ -1,13 +1,8 @@
 package com.elearningpath.wetestx.models;
 
 import com.elearningpath.wetestx.base.BaseModel;
-import com.elearningpath.wetestx.beans.ApiResponse;
-import com.elearningpath.wetestx.beans.ArticleTypeBean;
-import com.elearningpath.wetestx.utils.NetApi;
 
 import javax.inject.Inject;
-
-import rx.Observable;
 
 /**
  * Created by zty

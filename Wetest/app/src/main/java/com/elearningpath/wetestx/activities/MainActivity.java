@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.elearningpath.wetestx.R;
-import com.elearningpath.wetestx.base.BaseActiviy;
+import com.elearningpath.wetestx.base.BaseActivity;
 import com.elearningpath.wetestx.base.BaseModel;
 import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.configs.components.DaggerActivityComponent;
@@ -26,24 +26,26 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Subscription;
-import rx.functions.Action1;
-/**
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+/*
  * Created by zty
  * 个人github地址：http://www.github.com/skyshenfu
  * 日期：2017/3/16
  * 版本号：1.0.0
  * 描述：
  */
-public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView {
+public class MainActivity extends BaseActivity<MainPresenter> implements BaseView {
     @Inject
-    Subscription rxSbscription;
+    Disposable disposable;
     @BindView(R.id.content_textview)
     TextView contentTextView;
     @BindView(R.id.change_button)
     Button button;
     @BindView(R.id.remote_button)
     Button remoteButton;
+    @BindView(R.id.rxbus_button)
+    Button rxButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setActivityType(0,"标题",true);
@@ -52,9 +54,9 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
         unbinder=ButterKnife.bind(this);
         DaggerActivityComponent.builder()
                 .progressMoudle(new ProgressMoudle(this))
-                .rxbusSubscriptionModule(new RxbusSubscriptionModule(new Action1<Event>() {
+                .rxbusSubscriptionModule(new RxbusSubscriptionModule(new Consumer<Event>() {
                     @Override
-                    public void call(Event event) {
+                    public void accept(Event event) throws Exception {
                         if (event.getName().equals("ABC")){
                             Log.e("TAG", "call: ");
                         }
@@ -63,7 +65,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
                 .build()
                 .inject(this);
         presenter.attachMvpView(this,this);
-        super.rxSbscription=this.rxSbscription;
+        super.disposable=this.disposable;
         Log.e("ssdad", "onCreate:");
     }
 
@@ -72,7 +74,7 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
     public void showProgress() {
         lazyProgressUtils.get().progressShow();
     }
-    @OnClick({R.id.change_button,R.id.act_button,R.id.watch_button,R.id.remote_button})
+    @OnClick({R.id.change_button,R.id.act_button,R.id.watch_button,R.id.remote_button,R.id.rxbus_button})
     void onClick(View view){
         switch (view.getId()){
             case R.id.change_button:
@@ -86,6 +88,9 @@ public class MainActivity extends BaseActiviy<MainPresenter> implements BaseView
                 break;
             case R.id.remote_button:
                 presenter.loadRemoteData();
+                break;
+            case R.id.rxbus_button:
+                presenter.testRx();
                 break;
         }
 

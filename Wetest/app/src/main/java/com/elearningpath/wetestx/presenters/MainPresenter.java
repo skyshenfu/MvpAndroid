@@ -10,13 +10,16 @@ import com.elearningpath.wetestx.base.BasePresenterImpl;
 import com.elearningpath.wetestx.base.BaseView;
 import com.elearningpath.wetestx.beans.ApiResponse;
 import com.elearningpath.wetestx.beans.ArticleTypeBean;
+import com.elearningpath.wetestx.events.Event;
 import com.elearningpath.wetestx.models.ArticleTypeModel;
 import com.elearningpath.wetestx.models.MainModel;
 import com.elearningpath.wetestx.stream.Config;
 import com.elearningpath.wetestx.stream.SWCodecCameraStreamingActivity;
-import com.elearningpath.wetestx.utils.RetrofitCancel;
+import com.elearningpath.wetestx.utils.RxBus;
 import com.elearningpath.wetestx.utils.ToastUtil;
-import com.orhanobut.logger.Logger;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -27,10 +30,14 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import dagger.Lazy;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by zty
@@ -51,43 +58,12 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
     public void loadData(){
         //模拟网络耗时操作
         getView().showProgress();
-        final RetrofitCancel retrofitCancel=new RetrofitCancel();
-       Subscriber<Long> subscriber= new Subscriber<Long>() {
-            @Override
-            public void onCompleted() {
-                getView().hideProgress();
-                retrofitCancel.timerStop();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
+        DisposableObserver<Long> observer= new DisposableObserver<Long>() {
             @Override
             public void onNext(Long aLong) {
                 lazyMainModel.get().setNumberStr("内容"+new Random().nextInt(200));
                 getView().showData(lazyMainModel.get());
             }
-        };
-        retrofitCancel.setSubscriber(subscriber);
-        retrofitCancel.timerStart();
-        Observable.interval(3, TimeUnit.SECONDS)
-                .take(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-
-    }
-    public void loadRemoteData(){
-        //模拟网络耗时操作
-        getView().showProgress();
-        final RetrofitCancel retrofitCancel=new RetrofitCancel();
-        Subscriber<ApiResponse<ArticleTypeBean>> subscriber= new Subscriber<ApiResponse<ArticleTypeBean>>() {
-            @Override
-            public void onCompleted() {
-                retrofitCancel.timerStop();
-                getView().hideProgress();
-            }
 
             @Override
             public void onError(Throwable e) {
@@ -95,17 +71,50 @@ public class MainPresenter extends BasePresenterImpl<BaseView> {
             }
 
             @Override
+            public void onComplete() {
+                getView().hideProgress();
+//                compositeDisposable.remove(this);
+                Log.e("here", "onComplete: ");
+            }
+        };
+        compositeDisposable.add(observer);
+        Observable.interval(15, TimeUnit.SECONDS)
+                .take(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+
+
+    }
+    public void testRx(){
+        RxBus.getInstance().post(new Event("hello"));
+
+    }
+    public void loadRemoteData(){
+        getView().showProgress();
+        DisposableObserver<ApiResponse<ArticleTypeBean>> observer= new DisposableObserver<ApiResponse<ArticleTypeBean>>() {
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+              getView().hideProgress();
+              compositeDisposable.remove(this);
+            }
+
+            @Override
             public void onNext(ApiResponse<ArticleTypeBean> mainBeanApiResponse) {
                 lazyArticleTypeModel.get().setArticleTypeBean(mainBeanApiResponse.getData());
-                Intent intent=new Intent(getContext(), DaoTestActivity.class);
+      /*          Intent intent=new Intent(getContext(), DaoTestActivity.class);
                 intent.putExtra("DATA",lazyArticleTypeModel.get().getArticleTypeBean());
-                getContext().startActivity(intent);
+                getContext().startActivity(intent);*/
 
             }
         };
-        retrofitCancel.setSubscriber(subscriber);
-        retrofitCancel.timerStart();
-        lazyArticleTypeModel.get().getArticleTypeRemote().compose(schedulersTransformer()).subscribe(subscriber);
+        compositeDisposable.add(observer);
+        lazyArticleTypeModel.get().getArticleTypeRemote().compose(schedulersTransformer()).subscribe(observer);
 
     }
     public String requestStream(String appServerUrl) {

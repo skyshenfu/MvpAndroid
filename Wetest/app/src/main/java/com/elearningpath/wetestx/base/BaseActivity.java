@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.Unbinder;
 import dagger.Lazy;
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by zty
@@ -32,7 +32,7 @@ import rx.Subscription;
  * 描述：
  */
 
-public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenterImpl> extends AppCompatActivity {
 
     protected int type=0;
     protected static final int TITLEBARONLYBACK=1;
@@ -44,7 +44,7 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     protected Lazy<ProgressUtils> lazyProgressUtils;
     //Butterknife的解绑对象
     protected Unbinder unbinder;
-    protected Subscription rxSbscription=null;
+   protected Disposable disposable=null;
     protected boolean isMainActivity=false;
 
     protected TextView titleTextView;
@@ -73,13 +73,17 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (rxSbscription!=null){
-            if (!rxSbscription.isUnsubscribed()) {
-                rxSbscription.unsubscribe();
+        if (disposable!=null){
+            if (!disposable.isDisposed()) {
+                disposable.dispose();
             }
 
         }
         if (presenter!=null){
+            if (presenter.getCompositeDisposable()!=null){
+                presenter.getCompositeDisposable().clear();
+                Log.e("A", "onDestroy: ");
+            }
             //先解绑Presenter和View的耦合关系
             presenter.detachMvpView();
             //再直接让Presenter为null
@@ -154,7 +158,7 @@ public abstract class BaseActiviy<P extends BasePresenter> extends AppCompatActi
             backButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BaseActiviy.this.finish();
+                    BaseActivity.this.finish();
                 }
             });
         }

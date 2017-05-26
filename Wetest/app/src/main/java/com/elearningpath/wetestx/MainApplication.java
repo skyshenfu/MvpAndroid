@@ -5,17 +5,24 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import com.elearningpath.wetestx.configs.components.DaggerAppComponent;
 import com.elearningpath.wetestx.configs.modules.AppModule;
+import com.elearningpath.wetestx.events.Event;
 import com.elearningpath.wetestx.greendao.gen.DaoMaster;
 import com.elearningpath.wetestx.greendao.gen.DaoSession;
 import com.elearningpath.wetestx.utils.Constant;
 import com.elearningpath.wetestx.utils.CustomDBHelper;
+import com.elearningpath.wetestx.utils.RxBus;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.squareup.leakcanary.LeakCanary;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -42,6 +49,17 @@ public class MainApplication extends Application {
         DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build().inject(this);
+        RxBus.getInstance().toObservable(Event.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Event>() {
+                    @Override
+                    public void accept(Event event) throws Exception {
+                        if (event.getName().equals("hello")){
+                            Toast.makeText(MainApplication.this, "你好", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
         myApplication=this;
         initDataBase();
         initConstant();
