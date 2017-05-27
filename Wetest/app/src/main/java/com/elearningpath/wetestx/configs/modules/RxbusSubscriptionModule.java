@@ -37,6 +37,6 @@ public class RxbusSubscriptionModule {
         return RxBus.getInstance().toObservable(Event.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(consumer);
     }
 }
