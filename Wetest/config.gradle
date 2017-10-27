@@ -1,7 +1,7 @@
 ext {
             //SDK & Tool
-            compileSdkVersion = 25
-            buildToolsVersion = '25.0.2'
+            compileSdkVersion = 26
+            buildToolsVersion = '26.0.2'
             minSdkVersion = 16
             targetSdkVersion = 22
 
@@ -11,7 +11,7 @@ ext {
             // Butterknife
             butterknifeVersion='8.2.1'
             //dependencies
-            supportLibraryVersion = '25.1.1'
+            supportLibraryVersion = '26.1.0'
             //Rx
             rxAndroidVersion = '2.0.1'
             rxJavaVersion = '2.1.0'
